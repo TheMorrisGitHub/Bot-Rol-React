@@ -1,0 +1,50 @@
+# Add roles:
+
+@client.event
+async def on_raw_reaction_add(payload):
+  message_id = payload.message_id
+  if message_id == 879432093170536478:
+    guild_id = payload.guild_id
+    guild = discord.utils.find(lambda g : g.id == guild_id, client.guilds)
+
+    if payload.emoji.name == 'C_':
+      role = discord.utils.get(guild.roles, name='C++')
+    else:
+      role = discord.utils.get(guild.roles, name=payload.emoji.name)
+    
+ # member = discord.utils.find(lambda m : m.id == payload.user_id, guild.members)
+
+    if role is not None:
+      member = discord.utils.find(lambda m : m.id == payload.user_id, guild.members)
+      if member is not None:
+        await member.add_roles(role)
+        print("Done.")
+      else:
+        print("Member not found.")
+    else:
+      print("Role not found.")
+
+
+# Remove roles
+#@client.event
+#async def on_raw_reaction_remove(payload):
+#  message_id = payload.message_id
+#  if message_id == 879432093170536478:
+#    guild_id = payload.guild_id
+#    guild = discord.utils.find(lambda g : g.id == guild_id, client.guilds)
+
+#    if payload.emoji.name == 'C_':
+#      role = discord.utils.get(guild.roles, name='C++')
+#    else:
+#      role = discord.utils.get(guild.roles, name=payload.emoji.name)   
+
+#    if role is not None:
+#      guild = await client.fetch_guild(payload.guild_id)
+#      member = await guild.fetch_member(payload.user_id)
+#      if member is not None:
+#        await member.remove_roles(role)
+#        print("Done.")
+#      else:
+#        print("Member not found.")
+#    else:
+#      print("Role not found.")
